@@ -23,7 +23,10 @@ jobs:
         run: |
             pushd debian12
             docker build -t debian12:latest .
+            popd
             pushd debian11
             docker build -t debian11:latest .
+            popd
             pushd debian10
             docker build -t debian10:latest .
+            popd
