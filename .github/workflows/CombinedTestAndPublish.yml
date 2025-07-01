@@ -37,6 +37,18 @@ jobs:
             docker build -t joaojeronimopro/simplesystems:debian10 .
             popd
       
+      - name: Generate images - Build Systems
+        run: |
+            pushd debian12-dpkg
+            docker build -t joaojeronimopro/buildsystems:debian12-dpkg .
+            popd
+            pushd debian11-dpkg
+            docker build -t joaojeronimopro/buildsystems:debian11-dpkg .
+            popd
+            pushd debian10-dpkg
+            docker build -t joaojeronimopro/buildsystems:debian10-dpkg .
+            popd
+      
       - name: List every image
         run: docker image list -a
       
