@@ -1,0 +1,29 @@
+name: Combined generate test and publish
+
+on: [push, pull_request]
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Env echo - Pre
+        run: |
+            # Default WD:
+            pwd
+            ls -la
+            # Home directory:
+            echo "HOME = $HOME"
+            ls -la ~
+
+      - name: Generate docker images in local registry
+        run: |
+            pushd debian12
+            docker build -t debian12:latest .
+            pushd debian11
+            docker build -t debian11:latest .
+            pushd debian10
+            docker build -t debian10:latest .
