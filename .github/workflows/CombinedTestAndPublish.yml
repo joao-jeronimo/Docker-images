@@ -35,7 +35,7 @@ jobs:
         run: docker image list -a
       
       - name: Smoke test the images
-        run: docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian12 --versien
+        run: docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian12 --version
       
       - name: List every container
         run: docker container ls -a
