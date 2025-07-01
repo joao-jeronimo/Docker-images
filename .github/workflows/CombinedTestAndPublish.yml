@@ -3,7 +3,7 @@ name: Combined generate test and publish
 on: [push, pull_request]
 
 jobs:
-  testes:
+  CombinedGenerateAndSmoketest:
     runs-on: ubuntu-latest
     timeout-minutes: 40
 
@@ -18,7 +18,7 @@ jobs:
             # Home directory:
             echo "HOME = $HOME"
             ls -la ~
-
+      
       - name: Generate docker images in local registry
         run: |
             pushd debian12
@@ -30,3 +30,12 @@ jobs:
             pushd debian10
             docker build -t debian10:latest .
             popd
+      
+      - name: List every image
+        run: docker image list -a
+      
+      - name: Smoke test the images
+        run: docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian12 --versien
+      
+      - name: List every container
+        run: docker container ls -a
