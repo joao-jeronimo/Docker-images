@@ -27,6 +27,7 @@ jobs:
       
       - name: Generate images - Simple Systems
         run: |
+            # Debian:
             pushd debian12
             docker build -t joaojeronimopro/simplesystems:debian12 .
             popd
@@ -36,9 +37,14 @@ jobs:
             pushd debian10
             docker build -t joaojeronimopro/simplesystems:debian10 .
             popd
+            # Ubuntu:
+            pushd ubuntu22.04
+            docker build -t joaojeronimopro/simplesystems:ubuntu22.04 .
+            popd
       
       - name: Generate images - Build Systems
         run: |
+            # Debian:
             pushd debian12-dpkg
             docker build -t joaojeronimopro/buildsystems:debian12-dpkg .
             popd
@@ -47,6 +53,10 @@ jobs:
             popd
             pushd debian10-dpkg
             docker build -t joaojeronimopro/buildsystems:debian10-dpkg .
+            popd
+            # Ubuntu:
+            pushd ubuntu22.04-dpkg
+            docker build -t joaojeronimopro/buildsystems:ubuntu22.04-dpkg .
             popd
       
       - name: List every image
@@ -63,6 +73,8 @@ jobs:
             docker push joaojeronimopro/simplesystems:debian12
             docker push joaojeronimopro/simplesystems:debian11
             docker push joaojeronimopro/simplesystems:debian10
+            docker push joaojeronimopro/simplesystems:ubuntu22.04
             docker push joaojeronimopro/buildsystems:debian12-dpkg
             docker push joaojeronimopro/buildsystems:debian11-dpkg
             docker push joaojeronimopro/buildsystems:debian10-dpkg
+            docker push joaojeronimopro/buildsystems:ubuntu22.04-dpkg
