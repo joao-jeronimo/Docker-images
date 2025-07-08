@@ -65,13 +65,13 @@ jobs:
       - name: Smoke test the images
         run: |
             docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian12           --version
+            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:debian12-dpkg           --version
             docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian11           --version
+            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:debian11-dpkg           --version
             docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian10           --version
+            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:debian10-dpkg           --version
             docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:ubuntu22.04        --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian12-dpkg      --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian11-dpkg      --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian10-dpkg      --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:ubuntu22.04-dpkg   --version
+            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:ubuntu22.04-dpkg        --version
       
       - name: List every container
         run: docker container ls -a
