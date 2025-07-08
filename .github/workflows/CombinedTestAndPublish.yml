@@ -25,64 +25,39 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Generate images - Simple Systems
+      - name: Generate images
         run: |
-            # Debian:
-            pushd debian12
-            docker build -t joaojeronimopro/simplesystems:debian12 .
-            popd
-            pushd debian11
-            docker build -t joaojeronimopro/simplesystems:debian11 .
-            popd
-            pushd debian10
-            docker build -t joaojeronimopro/simplesystems:debian10 .
-            popd
-            # Ubuntu:
-            pushd ubuntu22.04
-            docker build -t joaojeronimopro/simplesystems:ubuntu22.04 .
-            popd
-      
-      - name: Generate images - Build Systems
-        run: |
-            # Debian:
-            pushd debian12-dpkg
-            docker build -t joaojeronimopro/buildsystems:debian12-dpkg .
-            popd
-            pushd debian11-dpkg
-            docker build -t joaojeronimopro/buildsystems:debian11-dpkg .
-            popd
-            pushd debian10-dpkg
-            docker build -t joaojeronimopro/buildsystems:debian10-dpkg .
-            popd
-            # Ubuntu:
-            pushd ubuntu22.04-dpkg
-            docker build -t joaojeronimopro/buildsystems:ubuntu22.04-dpkg .
-            popd
+            for dori in debian12 debian11 debian10 ubuntu22.04
+            do  pushd $dori
+                docker build -t joaojeronimopro/simplesystems:$dori .
+                popd
+            done
+            for dori in debian12-dpkg debian11-dpkg debian10-dpkg ubuntu22.04-dpkg
+            do  pushd $dori
+                docker build -t joaojeronimopro/buildsystems:$dori .
+                popd
+            done
       
       - name: List every image
         run: docker image list -a
       
       - name: Smoke test the images
         run: |
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian12           --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:debian12-dpkg           --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian11           --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:debian11-dpkg           --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:debian10           --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:debian10-dpkg           --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:ubuntu22.04        --version
-            docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:ubuntu22.04-dpkg        --version
+            for dori in debian12 debian11 debian10 ubuntu22.04
+            do  docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:$dori --version
+            done
+            for dori in debian12-dpkg debian11-dpkg debian10-dpkg ubuntu22.04-dpkg
+            do  docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:$dori --version
+            done
       
       - name: List every container
         run: docker container ls -a
       
       - name: Publish images in Docker Hub
         run: |
-            docker push joaojeronimopro/simplesystems:debian12
-            docker push joaojeronimopro/simplesystems:debian11
-            docker push joaojeronimopro/simplesystems:debian10
-            docker push joaojeronimopro/simplesystems:ubuntu22.04
-            docker push joaojeronimopro/buildsystems:debian12-dpkg
-            docker push joaojeronimopro/buildsystems:debian11-dpkg
-            docker push joaojeronimopro/buildsystems:debian10-dpkg
-            docker push joaojeronimopro/buildsystems:ubuntu22.04-dpkg
+            for dori in debian12 debian11 debian10 ubuntu22.04
+            do  docker push joaojeronimopro/simplesystems:$dori
+            done
+            for dori in debian12-dpkg debian11-dpkg debian10-dpkg ubuntu22.04-dpkg
+            do  docker push joaojeronimopro/buildsystems:$dori
+            done
