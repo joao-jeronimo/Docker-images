@@ -9,55 +9,38 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Env echo - Pre
-        run: |
-            # Default WD:
-            pwd
-            ls -la
-            # Home directory:
-            echo "HOME = $HOME"
-            ls -la ~
-      
+
       - name: Login on DockerHub via token
         uses: docker/login-action@v3
         with:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Generate images
-        run: |
-            for dori in debian12 debian11 debian10 ubuntu22.04
-            do  pushd $dori
-                docker build -t joaojeronimopro/simplesystems:$dori .
-                popd
-            done
-            for dori in debian12-dpkg debian11-dpkg debian10-dpkg ubuntu22.04-dpkg
-            do  pushd $dori
-                docker build -t joaojeronimopro/buildsystems:$dori .
-                popd
-            done
-      
-      - name: List every image
-        run: docker image list -a
-      
-      - name: Smoke test the images
-        run: |
-            for dori in debian12 debian11 debian10 ubuntu22.04
-            do  docker run --rm --entrypoint /bin/bash joaojeronimopro/simplesystems:$dori --version
-            done
-            for dori in debian12-dpkg debian11-dpkg debian10-dpkg ubuntu22.04-dpkg
-            do  docker run --rm --entrypoint /bin/bash joaojeronimopro/buildsystems:$dori --version
-            done
-      
-      - name: List every container
-        run: docker container ls -a
+      - name: Generate debian12
+        run: ./BuildAndTest.bash simplesystems debian12
+      - name: Generate debian11
+        run: ./BuildAndTest.bash simplesystems debian11
+      - name: Generate debian10
+        run: ./BuildAndTest.bash simplesystems debian10
+      - name: Generate ubuntu22.04
+        run: ./BuildAndTest.bash simplesystems ubuntu22.04
+
+      - name: Generate debian12-dpkg
+        run: ./BuildAndTest.bash buildsystems debian12-dpkg
+      - name: Generate debian11-dpkg
+        run: ./BuildAndTest.bash buildsystems debian11-dpkg
+      - name: Generate debian10-dpkg
+        run: ./BuildAndTest.bash buildsystems debian10-dpkg
+      - name: Generate ubuntu22.04-dpkg
+        run: ./BuildAndTest.bash buildsystems ubuntu22.04-dpkg
       
       - name: Publish images in Docker Hub
         run: |
-            for dori in debian12 debian11 debian10 ubuntu22.04
-            do  docker push joaojeronimopro/simplesystems:$dori
-            done
-            for dori in debian12-dpkg debian11-dpkg debian10-dpkg ubuntu22.04-dpkg
-            do  docker push joaojeronimopro/buildsystems:$dori
-            done
+            docker push joaojeronimopro/simplesystems:debian12
+            docker push joaojeronimopro/simplesystems:debian11
+            docker push joaojeronimopro/simplesystems:debian10
+            docker push joaojeronimopro/simplesystems:ubuntu22.04
+            docker push joaojeronimopro/buildsystems:debian12-dpkg
+            docker push joaojeronimopro/buildsystems:debian11-dpkg
+            docker push joaojeronimopro/buildsystems:debian10-dpkg
+            docker push joaojeronimopro/buildsystems:ubuntu22.04-dpkg
