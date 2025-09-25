@@ -22,6 +22,8 @@ jobs:
         run: ./BuildAndTest.bash simplesystems debian11
       - name: Generate ubuntu22.04
         run: ./BuildAndTest.bash simplesystems ubuntu22.04
+      - name: Generate ubuntu18.04
+        run: ./BuildAndTest.bash simplesystems ubuntu18.04
 
       - name: Generate debian12-dpkg
         run: ./BuildAndTest.bash buildsystems debian12-dpkg
@@ -35,6 +37,7 @@ jobs:
             docker push joaojeronimopro/simplesystems:debian12
             docker push joaojeronimopro/simplesystems:debian11
             docker push joaojeronimopro/simplesystems:ubuntu22.04
+            docker push joaojeronimopro/simplesystems:ubuntu18.04
             docker push joaojeronimopro/buildsystems:debian12-dpkg
             docker push joaojeronimopro/buildsystems:debian11-dpkg
             docker push joaojeronimopro/buildsystems:ubuntu22.04-dpkg
