@@ -20,8 +20,6 @@ jobs:
         run: ./BuildAndTest.bash simplesystems debian12
       - name: Generate debian11
         run: ./BuildAndTest.bash simplesystems debian11
-      - name: Generate debian10
-        run: ./BuildAndTest.bash simplesystems debian10
       - name: Generate ubuntu22.04
         run: ./BuildAndTest.bash simplesystems ubuntu22.04
 
@@ -29,8 +27,6 @@ jobs:
         run: ./BuildAndTest.bash buildsystems debian12-dpkg
       - name: Generate debian11-dpkg
         run: ./BuildAndTest.bash buildsystems debian11-dpkg
-      - name: Generate debian10-dpkg
-        run: ./BuildAndTest.bash buildsystems debian10-dpkg
       - name: Generate ubuntu22.04-dpkg
         run: ./BuildAndTest.bash buildsystems ubuntu22.04-dpkg
       
