@@ -34,9 +34,7 @@ jobs:
         run: |
             docker push joaojeronimopro/simplesystems:debian12
             docker push joaojeronimopro/simplesystems:debian11
-            docker push joaojeronimopro/simplesystems:debian10
             docker push joaojeronimopro/simplesystems:ubuntu22.04
             docker push joaojeronimopro/buildsystems:debian12-dpkg
             docker push joaojeronimopro/buildsystems:debian11-dpkg
-            docker push joaojeronimopro/buildsystems:debian10-dpkg
             docker push joaojeronimopro/buildsystems:ubuntu22.04-dpkg
