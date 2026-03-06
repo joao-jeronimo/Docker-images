@@ -1,7 +1,7 @@
 name: Combined generate test and publish
 
 on:
-  push
+  push:
   schedule:
     - cron: '0 13 * * *'
 
