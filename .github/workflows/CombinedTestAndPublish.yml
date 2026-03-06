@@ -1,6 +1,9 @@
 name: Combined generate test and publish
 
-on: [push, pull_request]
+on:
+  push
+  schedule:
+    - cron: '0 13 * * *'
 
 jobs:
   CombinedGenerateAndSmoketest:
